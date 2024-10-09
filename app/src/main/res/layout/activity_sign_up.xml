@@ -1,18 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.auth.LoginActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="100dp"
-        android:orientation="vertical"
-        >
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/category_image"
@@ -25,55 +26,73 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edtU"
-        android:layout_width="349dp"
-        android:layout_height="52dp"
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="59dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="text"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:layout_gravity="center"
-        />
+        android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/edtP"
-        android:layout_width="349dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="59dp"
         android:ems="10"
         android:hint="Mật khẩu"
-        android:layout_gravity="center"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:layout_below="@id/edtU"
-        />
+        android:textColorHint="@color/black" />
+
+
+    <EditText
+        android:id="@+id/editConfirmP"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="59dp"
+        android:ems="10"
+        android:hint="Xác nhận mật khẩu"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btnSignUp"
         android:layout_width="243dp"
         android:layout_height="56dp"
         android:layout_marginTop="50dp"
-        android:text="Đăng nhập"
+        android:text="Đăng Ký"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:background="@drawable/rounded_button_background_red"
-        android:layout_below="@id/tvAY" />
+        android:layout_below="@id/editConfirmP" />
+
+
 
 
     <TextView
-        android:id="@+id/tvAY"
+        android:id="@+id/tvAA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtP"
         android:layout_alignParentEnd="true"
         android:gravity="center"
-        android:layout_marginTop="200dp"
-        android:text="Bạn chưa có tài khoản? Đăng ký"
+        android:layout_marginTop="100dp"
+        android:text="Bạn đã có tài khoản? Đăng nhập"
         android:textColor="#656565"
         android:textSize="20sp"
         android:textStyle="bold" />
-
-
 </LinearLayout>

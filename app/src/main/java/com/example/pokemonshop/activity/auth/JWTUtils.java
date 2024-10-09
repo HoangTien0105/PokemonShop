@@ -1,4 +1,4 @@
-package com.example.pokemonshop.api.auth;
+package com.example.pokemonshop.activity.auth;
 
 import android.util.Base64;
 import android.util.Log;
