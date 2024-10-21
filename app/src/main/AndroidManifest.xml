@@ -19,6 +19,9 @@
             android:name=".activity.auth.SignUpActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.customer.ProductDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.auth.LoginActivity"
             android:exported="true"
             android:label="Category">
@@ -29,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.customer.MainActivity"
             android:exported="false">
 
         </activity>

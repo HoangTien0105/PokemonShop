@@ -15,11 +15,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pokemonshop.MainActivity;
+import com.example.pokemonshop.activity.customer.MainActivity;
 import com.example.pokemonshop.R;
 import com.example.pokemonshop.api.auth.AuthRepository;
 import com.example.pokemonshop.api.auth.AuthService;
 import com.example.pokemonshop.model.LoginResponse;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,12 +83,42 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("accessToken", accessToken);
                         editor.apply();
 
-                        // Chuyển sang MainActivity sau khi đăng nhập thành công
-                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("accessToken", accessToken);
-                        startActivity(intent);
-                        finish(); // Đóng LoginActivity
+                        try {
+                            String[] decodedParts = JWTUtils.decoded(accessToken);
+                            String body = decodedParts[1];
+
+                            // Parse the body to get the role and possibly the CustomerId
+                            JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
+                            String role = jsonObject.get("Role").getAsString();
+                            int customerId = -1;
+                            Intent intent = null;
+
+                            if (role != null) {
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                if (role.equals("ADMIN")) {
+                                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                                } else if (role.equals("CUSTOMER")) {
+                                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    if (jsonObject.has("CustomerId")) {
+                                        customerId = jsonObject.get("CustomerId").getAsInt();
+                                        editor.putInt("customerId", customerId);
+                                        editor.apply();
+                                    }
+                                }
+
+                                if (intent != null) {
+                                    intent.putExtra("accessToken", accessToken);
+                                    startActivity(intent);
+                                    finish(); // Close LoginActivity
+                               //     checkAndRequestNotificationPermission(customerId);
+                                }
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Không tìm thấy Role ở token", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this, "Decode token thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: Không nhận được token", Toast.LENGTH_SHORT).show();
                     }
