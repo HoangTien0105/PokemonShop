@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pokemonshop.activity.admin.AdminDashboardActivity;
 import com.example.pokemonshop.activity.customer.MainActivity;
 import com.example.pokemonshop.R;
 import com.example.pokemonshop.api.auth.AuthRepository;
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (role != null) {
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 if (role.equals("ADMIN")) {
-                                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
                                 } else if (role.equals("CUSTOMER")) {
                                     intent = new Intent(LoginActivity.this, MainActivity.class);
                                     if (jsonObject.has("CustomerId")) {
