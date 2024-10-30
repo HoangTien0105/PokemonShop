@@ -23,6 +23,7 @@ import com.example.pokemonshop.R;
 import com.example.pokemonshop.activity.auth.JWTUtils;
 import com.example.pokemonshop.activity.customer.MainActivity;
 import com.example.pokemonshop.activity.customer.OrderCustomerDetailActivity;
+import com.example.pokemonshop.adapters.CartItemRecyclerViewAdapter;
 import com.example.pokemonshop.api.CartItem.CartItemRepository;
 import com.example.pokemonshop.api.CartItem.CartItemService;
 import com.example.pokemonshop.model.CartItem;
@@ -39,7 +40,7 @@ public class CartFragment extends Fragment {
 
     private RecyclerView itemRecyclerView;
     private TextView totalPriceTextView;
-    //private CartItemRecyclerViewAdapter cartAdapter;
+    private CartItemRecyclerViewAdapter cartAdapter;
     private int customerId;
 
     AppCompatButton buttonOrder;
@@ -106,8 +107,8 @@ public class CartFragment extends Fragment {
             public void onResponse(Call<List<CartItem>> call, Response<List<CartItem>> response) {
                 if (response.isSuccessful()) {
                     items = response.body();
-                    //cartAdapter = new CartItemRecyclerViewAdapter(items, getContext(), CartFragment.this);
-                    //itemRecyclerView.setAdapter(cartAdapter);
+                    cartAdapter = new CartItemRecyclerViewAdapter(items, getContext(), CartFragment.this);
+                    itemRecyclerView.setAdapter(cartAdapter);
                     calculateTotalPrice(items);
                 }
             }

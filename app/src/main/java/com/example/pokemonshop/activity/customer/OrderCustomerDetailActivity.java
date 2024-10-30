@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pokemonshop.R;
 import com.example.pokemonshop.activity.auth.JWTUtils;
-//import com.example.pokemonshop.adapters.OrderCustomerDetailRecycleViewAdapter;
+import com.example.pokemonshop.adapters.OrderCustomerDetailRecycleViewAdapter;
 import com.example.pokemonshop.api.CartItem.CartItemRepository;
 import com.example.pokemonshop.api.CartItem.CartItemService;
 import com.example.pokemonshop.api.order.OrderRepository;
@@ -44,7 +44,7 @@ import retrofit2.Response;
 
 public class OrderCustomerDetailActivity extends AppCompatActivity {
     private RecyclerView itemRecyclerView;
-    //private OrderCustomerDetailRecycleViewAdapter orderAdapter;
+    private OrderCustomerDetailRecycleViewAdapter orderAdapter;
     private List<CartItem> items;
     private int customerId;
 
@@ -153,8 +153,8 @@ public class OrderCustomerDetailActivity extends AppCompatActivity {
             public void onResponse(Call<List<CartItem>> call, Response<List<CartItem>> response) {
                 if (response.isSuccessful()) {
                     items = response.body();
-                    //orderAdapter = new OrderCustomerDetailRecycleViewAdapter(items, OrderCustomerDetailActivity.this);
-                    //itemRecyclerView.setAdapter(orderAdapter);
+                    orderAdapter = new OrderCustomerDetailRecycleViewAdapter(items, OrderCustomerDetailActivity.this);
+                    itemRecyclerView.setAdapter(orderAdapter);
                     calculateTotalPrice(items);
                 }
             }
