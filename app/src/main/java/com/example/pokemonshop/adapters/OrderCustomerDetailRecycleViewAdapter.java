@@ -53,20 +53,7 @@ public class OrderCustomerDetailRecycleViewAdapter extends RecyclerView.Adapter<
         holder.textViewName.setText(cart.getProductVIew().getName());
         holder.textViewPrice.setText(String.format("%.2f VND", cart.getProductVIew().getPrice()));
         holder.quantityView.setText(String.valueOf(cart.getQuantity()));
-        // Load image using Glide
-        if (cart.getProductVIew().getImages() != null && !cart.getProductVIew().getImages().isEmpty()) {
-            String base64Image = cart.getProductVIew().getImages().get(0).getBase64StringImage();
-            if (base64Image != null && !base64Image.isEmpty()) {
-                byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
-                Glide.with(context)
-                        .load(imageBytes)
-                        .into(holder.imageView);
-            } else {
-                holder.imageView.setImageResource(R.drawable.pikachu); // Default image
-            }
-        } else {
-            holder.imageView.setImageResource(R.drawable.pikachu); // Default image
-        }
+        holder.imageView.setImageResource(R.drawable.pikachu);
         holder.itemView.setOnClickListener(v -> viewProductDetails(cart.getProductVIew().getProductId()));
 
 

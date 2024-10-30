@@ -33,15 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 int itemId = item.getItemId();
                 if (itemId == R.id.navigation_home) {
                     selectedFragment = new HomeFragment();
-//                } else if (itemId == R.id.navigation_cart) {
-//                    selectedFragment = new CartFragment();
-//                }else if (itemId == R.id.navigation_location) {
-//                    selectedFragment = new LocationFragment();
                 }else if (itemId == R.id.navigation_profile) {
                     selectedFragment = new ProfileFragment();
-//
-//                }else if (itemId == R.id.navigation_chat) {
-//                    selectedFragment = new ChatFragment();
                 }
 
                 if (selectedFragment != null) {

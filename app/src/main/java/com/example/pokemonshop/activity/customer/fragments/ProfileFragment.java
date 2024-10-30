@@ -79,12 +79,10 @@ public class ProfileFragment extends Fragment {
         dobEditText = view.findViewById(R.id.editTextDob);
         btnUpdate = view.findViewById(R.id.btnUpdate);
         btnSignOut = view.findViewById(R.id.btnSignOut);
-   //     btnViewOrders = view.findViewById(R.id.btnViewOrders);
         ordersRecyclerView = view.findViewById(R.id.orders_recycler_view);
 
         // Thiết lập sự kiện click cho các nút
         btnSignOut.setOnClickListener(v -> signOut());
-      //  btnViewOrders.setOnClickListener(v -> viewOrders());
         btnUpdate.setOnClickListener(v -> updateCustomerInfo());
 
         // Lấy accessToken từ Intent hoặc SharedPreferences

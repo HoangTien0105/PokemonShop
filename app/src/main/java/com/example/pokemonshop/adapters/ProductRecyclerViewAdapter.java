@@ -49,24 +49,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         // Set tên và giá cho TextView
         holder.textViewName.setText(product.getName());
         holder.textViewPrice.setText(String.format("%.2f VND", product.getPrice()));
-
-        // Load hình ảnh sản phẩm bằng thư viện Glide
-        if (product.getImages() != null && !product.getImages().isEmpty()) {
-            String base64Image = product.getImages().get(0).getBase64StringImage(); // Lấy hình ảnh đầu tiên
-            if (base64Image != null && !base64Image.isEmpty()) {
-                // Decode chuỗi Base64 thành mảng byte
-                byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
-                Glide.with(context)
-                        .load(imageBytes) // Load ảnh từ mảng byte
-                        .into(holder.imageView); // Gán ảnh vào ImageView
-            } else {
-                // Nếu không có hình ảnh, đặt hình ảnh mặc định
-                holder.imageView.setImageResource(R.drawable.pikachu);
-            }
-        } else {
-            // Nếu danh sách hình ảnh null hoặc rỗng, đặt hình ảnh mặc định
-            holder.imageView.setImageResource(R.drawable.pikachu);
-        }
+        holder.imageView.setImageResource(R.drawable.pikachu);
 
         // Đặt sự kiện click cho từng item trong RecyclerView
         holder.itemView.setOnClickListener(v -> {
