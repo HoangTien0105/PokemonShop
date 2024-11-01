@@ -36,6 +36,42 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.customer.OrderCustomerDetailActivity"
+            android:exported="false">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.customer.PaymentFailedActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="payment-failed"
+                    android:scheme="pokemonshop" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.customer.PaymentSuccessActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="payment-success"
+                    android:scheme="pokemonshop" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.customer.MainActivity"
             android:exported="false">
 
