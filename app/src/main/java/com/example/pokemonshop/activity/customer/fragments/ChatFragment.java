@@ -18,6 +18,12 @@ import android.widget.Toast;
 
 import com.example.pokemonshop.R;
 import com.example.pokemonshop.adapters.CustomerChatAdapter;
+import com.example.pokemonshop.api.Message.MessageRepository;
+import com.example.pokemonshop.model.ChatHistoryResponse;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatFragment extends Fragment {
 
@@ -55,7 +61,7 @@ public class ChatFragment extends Fragment {
         Log.d("ChatFragment", "Id khách hàng được truy xuất: " + customerId);
 
         if (customerId != -1) {
-//            loadChatHistory(customerId);
+            loadChatHistory(customerId);
         } else {
             Toast.makeText(getContext(), "Customer ID không tìm thấy", Toast.LENGTH_SHORT).show();
         }
@@ -68,5 +74,23 @@ public class ChatFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void loadChatHistory(int customerId) {
+        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
+            @Override
+            public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    chatAdapter.setMessages(response.body().getMessageHistory());
+                } else {
+                    Log.e("ChatFragment", "Tải lịch sử chat thất bại (onResponse)");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
+                Log.e("ChatFragment", "Tải lịch sử chat thất bại (onFailure)", t);
+            }
+        });
     }
 }
