@@ -78,6 +78,21 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadChatHistory(int customerId) {
+        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
+            @Override
+            public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    chatAdapter.setMessages(response.body().getMessageHistory());
+                } else {
+                    Log.e("ChatFragment", "Tải lịch sử chat thất bại (onResponse)");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
+                Log.e("ChatFragment", "Tải lịch sử chat thất bại (onFailure)", t);
+            }
+        });
     }
 
     private void sendMessage() {
