@@ -20,6 +20,7 @@ import com.example.pokemonshop.R;
 import com.example.pokemonshop.adapters.CustomerChatAdapter;
 import com.example.pokemonshop.api.Message.MessageRepository;
 import com.example.pokemonshop.model.ChatHistoryResponse;
+import com.example.pokemonshop.model.MessageDtoRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +70,7 @@ public class ChatFragment extends Fragment {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sendMessage();
+                sendMessage();
             }
         });
 
@@ -77,19 +78,36 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadChatHistory(int customerId) {
-        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
+    }
+
+    private void sendMessage() {
+        String content = editTextMessage.getText().toString();
+        if (content.isEmpty()) {
+            return;
+        }
+
+        Log.d("ChatFragment", "Đang gửi tin nhắn với CustomerId: " + customerId);
+
+        MessageDtoRequest request = new MessageDtoRequest();
+        request.setCustomerId(customerId);
+        request.setContent(content);
+        request.setSendTime(java.time.LocalDateTime.now().toString());
+        request.setType("CUSTOMER");
+
+        MessageRepository.sendMessage(request).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    chatAdapter.setMessages(response.body().getMessageHistory());
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    loadChatHistory(customerId);
+                    editTextMessage.setText("");
                 } else {
-                    Log.e("ChatFragment", "Tải lịch sử chat thất bại (onResponse)");
+                    Log.e("ChatFragment", "Gửi tin nhắn thất bại (onResponse)");
                 }
             }
 
             @Override
-            public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
-                Log.e("ChatFragment", "Tải lịch sử chat thất bại (onFailure)", t);
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("ChatFragment", "Gửi tin nhắn thất bại (onFailure)", t);
             }
         });
     }
