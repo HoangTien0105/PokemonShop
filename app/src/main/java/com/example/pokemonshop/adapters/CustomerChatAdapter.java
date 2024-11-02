@@ -9,19 +9,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pokemonshop.R;
-import com.example.pokemonshop.model.MessageDtoResponse;
+import com.example.pokemonshop.model.MessageDtoRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_CUSTOMER = 1;
     private static final int VIEW_TYPE_ADMIN = 2;
 
-    private List<MessageDtoResponse> messages;
+    private List<MessageDtoRequest> messages;
+
+    public void addMessage(MessageDtoRequest message) {
+        if (messages == null) {
+            messages = new ArrayList<MessageDtoRequest>();
+        }
+
+        messages.add(message);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemViewType(int position) {
-        MessageDtoResponse message = messages.get(position);
+        MessageDtoRequest message = messages.get(position);
         if ("CUSTOMER".equals(message.getType())) {
             return VIEW_TYPE_CUSTOMER;
         } else {
@@ -44,7 +54,7 @@ public class CustomerChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MessageDtoResponse message = messages.get(position);
+        MessageDtoRequest message = messages.get(position);
         if (holder instanceof CustomerViewHolder) {
             ((CustomerViewHolder) holder).bind(message);
         } else {
@@ -57,7 +67,7 @@ public class CustomerChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return messages != null ? messages.size() : 0;
     }
 
-    public void setMessages(List<MessageDtoResponse> messages) {
+    public void setMessages(List<MessageDtoRequest> messages) {
         this.messages = messages;
         notifyDataSetChanged();
     }
@@ -71,7 +81,7 @@ public class CustomerChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textViewTime = itemView.findViewById(R.id.textViewTime);
         }
 
-        void bind(MessageDtoResponse message) {
+        void bind(MessageDtoRequest message) {
             textViewMessage.setText(message.getContent());
             textViewTime.setText(message.getSendTime());
         }
@@ -86,7 +96,7 @@ public class CustomerChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textViewTime = itemView.findViewById(R.id.textViewTime);
         }
 
-        void bind(MessageDtoResponse message) {
+        void bind(MessageDtoRequest message) {
             textViewMessage.setText(message.getContent());
             textViewTime.setText(message.getSendTime());
         }

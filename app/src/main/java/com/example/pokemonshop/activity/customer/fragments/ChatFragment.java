@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,15 @@ import com.example.pokemonshop.adapters.CustomerChatAdapter;
 import com.example.pokemonshop.api.Message.MessageRepository;
 import com.example.pokemonshop.model.ChatHistoryResponse;
 import com.example.pokemonshop.model.MessageDtoRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +74,7 @@ public class ChatFragment extends Fragment {
         Log.d("ChatFragment", "Id khách hàng được truy xuất: " + customerId);
 
         if (customerId != -1) {
-            loadChatHistory(customerId);
+            syncChat(customerId);
         } else {
             Toast.makeText(getContext(), "Customer ID không tìm thấy", Toast.LENGTH_SHORT).show();
         }
@@ -71,35 +83,73 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sendMessage();
+                editTextMessage.setText("");
             }
         });
 
         return view;
     }
 
-    private void loadChatHistory(int customerId) {
-        MessageRepository.getChatHistoryByCustomerId(customerId).enqueue(new Callback<ChatHistoryResponse>() {
+    private void syncChat(int customerId) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference chatRef = database.getReference("chats").child(String.valueOf(customerId)).child("messages");
+
+        chatRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onResponse(Call<ChatHistoryResponse> call, Response<ChatHistoryResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    chatAdapter.setMessages(response.body().getMessageHistory());
-                } else {
-                    Log.e("ChatFragment", "Tải lịch sử chat thất bại (onResponse)");
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final List<MessageDtoRequest> messages = new ArrayList<>();
+                for (DataSnapshot ss : snapshot.getChildren()) {
+                    MessageDtoRequest message = ss.getValue(MessageDtoRequest.class);
+                    Log.e("ChatFragment", "Message: " + message);
+                    // Add each message to your RecyclerView adapter or UI
+                    messages.add(message);
                 }
+                chatAdapter.setMessages(messages);
             }
 
             @Override
-            public void onFailure(Call<ChatHistoryResponse> call, Throwable t) {
-                Log.e("ChatFragment", "Tải lịch sử chat thất bại (onFailure)", t);
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        chatRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                MessageDtoRequest newMessage = snapshot.getValue(MessageDtoRequest.class);
+                Log.e("ChatFragment", "Message: " + newMessage);
+                chatAdapter.addMessage(newMessage);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.e("ChatFragment", "Failed to load chat history", error.toException());
             }
         });
     }
 
     private void sendMessage() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference chatRef = database.getReference("chats").child(String.valueOf(customerId));
+
         String content = editTextMessage.getText().toString();
         if (content.isEmpty()) {
             return;
         }
+
+        String messageId = chatRef.push().getKey();
 
         Log.d("ChatFragment", "Đang gửi tin nhắn với CustomerId: " + customerId);
 
@@ -109,21 +159,10 @@ public class ChatFragment extends Fragment {
         request.setSendTime(java.time.LocalDateTime.now().toString());
         request.setType("CUSTOMER");
 
-        MessageRepository.sendMessage(request).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    loadChatHistory(customerId);
-                    editTextMessage.setText("");
-                } else {
-                    Log.e("ChatFragment", "Gửi tin nhắn thất bại (onResponse)");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("ChatFragment", "Gửi tin nhắn thất bại (onFailure)", t);
-            }
-        });
+        chatRef.child("messages").child(messageId).setValue(request)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("ChatFragment", "Gửi tin nhắn thành công");
+                })
+                .addOnFailureListener(e -> Log.e("ChatFragment", "Gửi tin nhắn thất bại", e));
     }
 }
