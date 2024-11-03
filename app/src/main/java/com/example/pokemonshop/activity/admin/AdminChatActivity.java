@@ -72,6 +72,7 @@ public class AdminChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
+                editTextMessage.setText("");
             }
         });
     }

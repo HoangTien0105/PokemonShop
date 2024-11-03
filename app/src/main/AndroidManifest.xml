@@ -20,6 +20,12 @@
             android:name=".activity.admin.AdminDashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.admin.AdminChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ChatCustomerListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.auth.SignUpActivity"
             android:exported="false" />
         <activity
