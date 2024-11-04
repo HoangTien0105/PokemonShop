@@ -18,7 +18,7 @@ import com.example.pokemonshop.activity.auth.LoginActivity;
 
 public class AdminDashboardActivity extends AppCompatActivity {
     // Các biến CardView đại diện cho các thẻ trên Dashboard
-    private CardView category, customer, product, chatBox, order, logout;
+    private CardView category, product, chatBox, order, logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,25 @@ public class AdminDashboardActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        category = findViewById(R.id.categoryCard);
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminDashboardActivity.this, CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        product = findViewById(R.id.productCard);
+        product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminDashboardActivity.this, ProductActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         logout = findViewById(R.id.logoutCard);
         logout.setOnClickListener(v -> signOut());
