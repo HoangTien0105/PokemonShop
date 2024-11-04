@@ -9,7 +9,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/pokemon"
-        android:label="@string/app_name"
+        android:label="Pokemon shop"
         android:roundIcon="@drawable/pokemon"
         android:supportsRtl="true"
         android:theme="@style/Theme.PokemonShop"
@@ -20,6 +20,18 @@
             android:name=".activity.admin.AdminDashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.admin.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.admin.ProductDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.auth.SignUpActivity"
             android:exported="false" />
         <activity
@@ -27,8 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.auth.LoginActivity"
-            android:exported="true"
-            android:label="Category">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
