@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Load default fragment
         if (savedInstanceState == null) {
-//            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         }
     }
 
