@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 // Fragment hiển thị giao diện trang chủ
-public class HomeFragment  extends Fragment {
+public class HomeFragment extends Fragment {
 
     private RecyclerView categoryRecyclerView;
     private RecyclerView productRecyclerView;

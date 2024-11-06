@@ -151,4 +151,23 @@ public class CartFragment extends Fragment {
     public void updateTotalPrice() {
         calculateTotalPrice(items);
     }
+
+    private void calculateTotalPrice1(List<CartItem> items) {
+        double totalPrice = 0.0;
+        for (CartItem item : items) {
+            totalPrice += item.getProductVIew().getPrice() * item.getQuantity();
+        }
+    }
+    private void calculateTotalPrice5(List<CartItem> items) {
+        double totalPrice = 0.0;
+        for (CartItem item : items) {
+            totalPrice += item.getProductVIew().getPrice() * item.getQuantity();
+        }
+    }
+    private void calculateTotalPrice2(List<CartItem> items) {
+        double totalPrice = 0.0;
+        for (CartItem item : items) {
+            totalPrice += item.getProductVIew().getPrice() * item.getQuantity();
+        }
+    }
 }
