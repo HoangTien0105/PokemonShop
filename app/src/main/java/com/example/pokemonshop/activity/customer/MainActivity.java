@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.pokemonshop.R;
 import com.example.pokemonshop.activity.customer.fragments.ChatFragment;
 import com.example.pokemonshop.activity.customer.fragments.HomeFragment;
+import com.example.pokemonshop.activity.customer.fragments.LocationFragment;
 import com.example.pokemonshop.activity.customer.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                 } else if (itemId == R.id.navigation_profile) {
                     selectedFragment = new ProfileFragment();
+                } else if (itemId == R.id.navigation_location) {
+                    selectedFragment = new LocationFragment();
                 } else if (itemId == R.id.navigation_chat) {
                     selectedFragment = new ChatFragment();
                 }
