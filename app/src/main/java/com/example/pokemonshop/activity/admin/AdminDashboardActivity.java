@@ -55,6 +55,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         logout = findViewById(R.id.logoutCard);
         logout.setOnClickListener(v -> signOut());
+
+        chatBox = findViewById(R.id.chatboxCard);
+        chatBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminDashboardActivity.this, ChatCustomerListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void signOut() {
