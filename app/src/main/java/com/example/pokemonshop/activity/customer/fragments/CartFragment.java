@@ -1,5 +1,6 @@
 package com.example.pokemonshop.activity.customer.fragments;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +29,7 @@ import com.example.pokemonshop.adapters.CartItemRecyclerViewAdapter;
 import com.example.pokemonshop.api.CartItem.CartItemRepository;
 import com.example.pokemonshop.api.CartItem.CartItemService;
 import com.example.pokemonshop.model.CartItem;
+import com.example.pokemonshop.utils.NotificationHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -128,6 +131,8 @@ public class CartFragment extends Fragment {
                     itemRecyclerView.setAdapter(cartAdapter);
                     // Tính tổng giá tiền
                     calculateTotalPrice(items);
+                    // Hiển thị badge notification với số lượng sản phẩm trong giỏ hàng
+                    //NotificationHelper.showCartBadgeNotification(getContext(), 1);
                 }
             }
 
