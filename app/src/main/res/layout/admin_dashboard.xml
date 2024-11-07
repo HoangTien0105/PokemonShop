@@ -253,45 +253,6 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toBottomOf="@id/row2">
 
-          <!-- CardView đại diện cho phần 'Khách hàng' -->
-          <androidx.cardview.widget.CardView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:id="@+id/customerCard"
-              android:layout_margin="10dp"
-              android:layout_weight="1"
-              app:cardElevation="20dp"
-              app:cardCornerRadius="20dp">
-
-              <RelativeLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-
-                  <!-- TextView hiển thị nhãn 'Khách hàng' -->
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/customersDashboard"
-                      android:text="Khách hàng"
-                      android:textSize="20sp"
-                      android:textColor="@color/lavender"
-                      android:fontFamily="@font/montserrat_semi_bold"
-                      android:layout_marginTop="10dp"
-                      android:layout_centerHorizontal="true"
-                      android:layout_below="@+id/customerImageDashboard"/>
-
-                  <!-- ImageView hiển thị biểu tượng của 'Khách hàng' -->
-                  <ImageView
-                      android:layout_width="70dp"
-                      android:layout_height="70dp"
-                      android:id="@+id/customerImageDashboard"
-                      android:src="@drawable/customer"
-                      android:layout_marginTop="15dp"
-                      android:layout_centerHorizontal="true"/>
-
-              </RelativeLayout>
-          </androidx.cardview.widget.CardView>
-
           <!-- CardView đại diện cho phần 'Đăng xuất'-->
          <androidx.cardview.widget.CardView
              android:layout_width="0dp"
