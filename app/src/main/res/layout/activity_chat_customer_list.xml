@@ -14,7 +14,7 @@
             android:id="@+id/toolbarChatCustomerList"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#000000"
+            android:background="#FF0000"
             app:navigationIcon="@drawable/ic_back_arrow"
             app:title="Danh sách khách hàng"
             app:titleTextColor="@color/white"

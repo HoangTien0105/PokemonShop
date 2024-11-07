@@ -15,7 +15,7 @@
             android:id="@+id/toolbarAdminChat"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#000000"
+            android:background="#FF0000"
             app:navigationIcon="@drawable/ic_back_arrow"
             app:title="Chat"
             app:titleTextColor="@android:color/white"
@@ -48,7 +48,7 @@
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button_background_black"
+            android:background="@drawable/rounded_button_background_red"
             android:text="Gửi"
             android:textColor="@color/white"/>
     </LinearLayout>

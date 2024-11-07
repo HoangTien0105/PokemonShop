@@ -31,7 +31,7 @@
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button_background_black"
+            android:background="@drawable/rounded_button_background_red"
             android:text="Gửi"
             android:textColor="@android:color/white"
             android:layout_marginStart="8dp"

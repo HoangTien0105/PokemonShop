@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.pokemonshop.R;
+import com.example.pokemonshop.activity.customer.fragments.CartFragment;
 import com.example.pokemonshop.activity.customer.fragments.ChatFragment;
 import com.example.pokemonshop.activity.customer.fragments.HomeFragment;
 import com.example.pokemonshop.activity.customer.fragments.LocationFragment;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new LocationFragment();
                 } else if (itemId == R.id.navigation_chat) {
                     selectedFragment = new ChatFragment();
+                } else if (itemId == R.id.navigation_cart) {
+                    selectedFragment = new CartFragment()   ;
                 }
 
                 if (selectedFragment != null) {

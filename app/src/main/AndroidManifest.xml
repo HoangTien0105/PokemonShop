@@ -29,6 +29,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.admin.ChatCustomerListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.admin.CategoryActivity"
             android:exported="false" />
         <activity
