@@ -29,7 +29,7 @@ import com.example.pokemonshop.adapters.CartItemRecyclerViewAdapter;
 import com.example.pokemonshop.api.CartItem.CartItemRepository;
 import com.example.pokemonshop.api.CartItem.CartItemService;
 import com.example.pokemonshop.model.CartItem;
-import com.example.pokemonshop.utils.NotificationHelper;
+//import com.example.pokemonshop.utils.NotificationHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
