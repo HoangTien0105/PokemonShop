@@ -180,20 +180,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_button_background"
+                android:background="@drawable/rounded_button_background_red"
                 android:text="Cập nhật"
                 android:textColor="@color/white"
                 android:enabled="true"
                 android:clickable="true" />
 
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/btnViewOrders"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Lịch sử mua hàng"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:background="@drawable/rounded_button_background"-->
-<!--                android:textColor="@color/white"/>-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSignOut"
@@ -201,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:text="Đăng xuất"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_button_background"
+                android:background="@drawable/rounded_button_background_red"
                 android:textColor="@color/white"/>
 
             <androidx.recyclerview.widget.RecyclerView
