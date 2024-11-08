@@ -94,25 +94,6 @@ public class ChatFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference chatRef = database.getReference("chats").child(String.valueOf(customerId)).child("messages");
 
-        chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                final List<MessageDtoRequest> messages = new ArrayList<>();
-                for (DataSnapshot ss : snapshot.getChildren()) {
-                    MessageDtoRequest message = ss.getValue(MessageDtoRequest.class);
-                    Log.e("ChatFragment", "Message: " + message);
-                    // Add each message to your RecyclerView adapter or UI
-                    messages.add(message);
-                }
-                chatAdapter.setMessages(messages);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
