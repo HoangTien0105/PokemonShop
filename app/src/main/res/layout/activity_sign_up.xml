@@ -14,9 +14,9 @@
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
+        android:contentDescription="Category Image"
         android:scaleType="fitCenter"
-        android:src="@drawable/pokemon"
-        android:contentDescription="Category Image" />
+        android:src="@drawable/custom_store_logo" />
 
     <TextView
         android:id="@+id/tvWelcome"
@@ -41,7 +41,34 @@
         android:textColorHint="@color/black"
         android:background="@drawable/edit_text_background"
         android:autofillHints="emailAddress"
-        android:importantForAccessibility="yes"
+        android:minHeight="48dp"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="Số điện thoại"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:minHeight="48dp"
+        android:padding="12dp" />
+
+    <EditText
+        android:id="@+id/editAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:hint="Địa chỉ"
+        android:inputType="textPostalAddress"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:background="@drawable/edit_text_background"
         android:minHeight="48dp"
         android:padding="12dp" />
 

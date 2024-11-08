@@ -44,11 +44,8 @@ public class ProfileFragment extends Fragment {
     private EditText nameEditText;
     private EditText addressEditText;
     private EditText phoneEditText;
-    private EditText dobEditText;
     private AppCompatButton btnUpdate;
     private AppCompatButton btnSignOut;
-    private AppCompatButton btnViewOrders;
-    private RecyclerView ordersRecyclerView;
     private int customerId;
 
     @Nullable
@@ -76,10 +73,8 @@ public class ProfileFragment extends Fragment {
         nameEditText = view.findViewById(R.id.editTextName);
         addressEditText = view.findViewById(R.id.editTextAddress);
         phoneEditText = view.findViewById(R.id.editTextPhone);
-        dobEditText = view.findViewById(R.id.editTextDob);
         btnUpdate = view.findViewById(R.id.btnUpdate);
         btnSignOut = view.findViewById(R.id.btnSignOut);
-        ordersRecyclerView = view.findViewById(R.id.orders_recycler_view);
 
         // Thiết lập sự kiện click cho các nút
         btnSignOut.setOnClickListener(v -> signOut());
@@ -122,7 +117,6 @@ public class ProfileFragment extends Fragment {
                     nameEditText.setText(customer.getName());
                     addressEditText.setText(customer.getAddress());
                     phoneEditText.setText(customer.getPhone());
-                    dobEditText.setText(customer.getDoB() != null ? customer.getDoB().toString() : "Not available");
                 } else {
                     Log.e("ProfileFragment", "Failed to get customer info");
                 }
@@ -141,7 +135,7 @@ public class ProfileFragment extends Fragment {
         String name = nameEditText.getText().toString();
         String address = addressEditText.getText().toString();
         String phone = phoneEditText.getText().toString();
-        String dob = dobEditText.getText().toString();
+        String dob = "01/01/2003";
 
         // Tạo đối tượng Customer để cập nhật thông tin
         Customer customer = new Customer();

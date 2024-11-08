@@ -10,10 +10,12 @@ public class Customer {
     private String doB;
 
     // Existing constructors
-    public Customer(String email, String password, String name) {
+    public Customer(String email, String password, String name, String address, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.address = address;
+        this.phone = phone;
     }
 
     public Customer(String email, String password, String name, String address, String phone, String doB) {
@@ -26,15 +28,6 @@ public class Customer {
     }
 
     public Customer() {
-    }
-
-    // New constructor
-    public Customer(String email, String name, String address, String phone, String doB) {
-        this.email = email;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.doB = doB;
     }
 
     // Getters and setters

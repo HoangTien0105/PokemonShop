@@ -42,7 +42,7 @@
                 android:contentDescription="Search Icon"
                 android:padding="8dp"
                 android:src="@drawable/ic_search"
-                android:background="@color/background_color"
+                android:background="@color/cardview_dark_background"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

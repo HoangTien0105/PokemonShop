@@ -81,8 +81,7 @@ public class HomeFragment extends Fragment {
             if (!query.isEmpty()) {
                 searchProducts(query); // Gọi phương thức tìm kiếm sản phẩm
             } else {
-                // Hiển thị thông báo nếu từ khóa tìm kiếm trống
-                Toast.makeText(getContext(), "Vui lòng nhập từ khóa để tìm kiếm", Toast.LENGTH_SHORT).show();
+                loadAllProducts(null, null);
             }
         });
 

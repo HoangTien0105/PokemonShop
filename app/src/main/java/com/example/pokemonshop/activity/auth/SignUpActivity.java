@@ -29,7 +29,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edtU; // ô nhập email
     private EditText edtP; // ô nhập mật khẩu
     private EditText edtCP; // ô nhập xác nhận mật khẩu
-    private EditText editName; // ô nhập xác nhận mật khẩu
+    private EditText editName; // ô nhập tên
+    private EditText editPhone; // ô nhập số điện thoại
+    private EditText editAddress; // ô nhập địa chỉ
     private TextView tvAA; // TextView để chuyển đến màn hình đăng nhập
     private Button btnSU; // nút đăng ký
     private final String REQUIRE = "Không để trống"; // Chuỗi thông báo cho các ô nhập liệu
@@ -48,6 +50,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtP = findViewById(R.id.editPassword);
         edtCP = findViewById(R.id.editConfirmP);
         editName = findViewById(R.id.editName);
+        editPhone = findViewById(R.id.editPhone);
+        editAddress = findViewById(R.id.editAddress);
         tvAA = findViewById(R.id.tvAA);
         btnSU = findViewById(R.id.btnSignUp);
 
@@ -61,21 +65,32 @@ public class SignUpActivity extends AppCompatActivity {
         btnSU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edtU.getText().toString();
-                String password = edtP.getText().toString();
-                String name = editName.getText().toString();
-                signup(email, password, name);
+                String name = editName.getText().toString().trim();
+                String email = edtU.getText().toString().trim();
+                String password = edtP.getText().toString().trim();
+                String confirmPassword = edtCP.getText().toString().trim();
+                String phone = editPhone.getText().toString().trim();
+                String address = editAddress.getText().toString().trim();
+
+                // Chỉ thực hiện đăng ký nếu xác nhận mật khẩu khớp với mật khẩu
+                if (!password.equals(confirmPassword)) {
+                    Toast.makeText(SignUpActivity.this, "Mật khẩu không trùng nhau", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                signup(email, password, name, phone, address);
             }
         });
 
+
     }
 
-    private void signup(String email, String password, String name) {
+    private void signup(String email, String password, String name, String phone, String address) {
         if (!checkInput()) {
             return;
         }
         AuthService authService = AuthRepository.getAuthService();
-        Customer customer = new Customer(email, password, name);
+        Customer customer = new Customer(email, password, name, address, phone);
         Call<Void> call = authService.register(customer);
 
         call.enqueue(new Callback<Void>() {
@@ -115,6 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "Mật khẩu không trùng nhau", Toast.LENGTH_LONG).show();
             return false;
         }
+        // Không kiểm tra phone và address để chúng là tùy chọn
         return true;
     }
 }
