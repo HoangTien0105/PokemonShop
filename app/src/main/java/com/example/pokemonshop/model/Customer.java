@@ -10,9 +10,10 @@ public class Customer {
     private String doB;
 
     // Existing constructors
-    public Customer(String email, String password) {
+    public Customer(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
     public Customer(String email, String password, String name, String address, String phone, String doB) {

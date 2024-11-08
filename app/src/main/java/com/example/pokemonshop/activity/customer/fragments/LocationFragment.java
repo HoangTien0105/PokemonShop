@@ -84,7 +84,7 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.gMap = googleMap;
 
-        LatLng storeLocation = new LatLng(10.875161439006936, 106.8007237477931); // Example coordinates (Ho Chi Minh City, Vietnam)
+        LatLng storeLocation = new LatLng(10.8412751, 106.8085794); // Example coordinates (Ho Chi Minh City, Vietnam)
         this.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(storeLocation, 15));
 
         BitmapDescriptor customMarker = getCustomMarkerIcon(R.drawable.custom_store_logo, 100, 100); // 100x100 pixels

@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edtU; // ô nhập email
     private EditText edtP; // ô nhập mật khẩu
     private EditText edtCP; // ô nhập xác nhận mật khẩu
+    private EditText editName; // ô nhập xác nhận mật khẩu
     private TextView tvAA; // TextView để chuyển đến màn hình đăng nhập
     private Button btnSU; // nút đăng ký
     private final String REQUIRE = "Không để trống"; // Chuỗi thông báo cho các ô nhập liệu
@@ -46,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         edtU = findViewById(R.id.editEmail);
         edtP = findViewById(R.id.editPassword);
         edtCP = findViewById(R.id.editConfirmP);
+        editName = findViewById(R.id.editName);
         tvAA = findViewById(R.id.tvAA);
         btnSU = findViewById(R.id.btnSignUp);
 
@@ -61,18 +63,19 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = edtU.getText().toString();
                 String password = edtP.getText().toString();
-                signup(email, password);
+                String name = editName.getText().toString();
+                signup(email, password, name);
             }
         });
 
     }
 
-    private void signup(String email, String password) {
+    private void signup(String email, String password, String name) {
         if (!checkInput()) {
             return;
         }
         AuthService authService = AuthRepository.getAuthService();
-        Customer customer = new Customer(email, password);
+        Customer customer = new Customer(email, password, name);
         Call<Void> call = authService.register(customer);
 
         call.enqueue(new Callback<Void>() {
