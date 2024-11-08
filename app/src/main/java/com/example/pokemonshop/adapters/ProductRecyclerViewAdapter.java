@@ -49,6 +49,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
         // Set tên và giá cho TextView
         holder.textViewName.setText(product.getName());
         holder.textViewPrice.setText(String.format("%.2f VND", product.getPrice()));
+        holder.textViewQuantity.setText(String.valueOf(product.getQuantity()));
         holder.imageView.setImageResource(R.drawable.pikachu);
 
         // Đặt sự kiện click cho từng item trong RecyclerView
@@ -70,6 +71,8 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewName; // TextView để hiển thị tên sản phẩm
         public TextView textViewPrice; // TextView để hiển thị giá sản phẩm
+        public TextView textViewQuantity; // TextView để hiển thị số lượng sản phẩm
+
         public ImageView imageView; // ImageView để hiển thị hình ảnh sản phẩm
 
         public ViewHolder(View itemView) {
@@ -77,6 +80,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
             // Tham chiếu đến các view trong layout item_product
             textViewName = itemView.findViewById(R.id.product_name);
             textViewPrice = itemView.findViewById(R.id.product_price);
+            textViewQuantity = itemView.findViewById(R.id.product_quantity);
             imageView = itemView.findViewById(R.id.product_image);
         }
     }

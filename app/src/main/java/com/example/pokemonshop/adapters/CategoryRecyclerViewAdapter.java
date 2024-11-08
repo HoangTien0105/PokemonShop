@@ -47,7 +47,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         holder.textViewName.setText(category.getName());
 
         // Set the image resource if it is static or load from URL if dynamic
-        holder.imageView.setImageResource(R.drawable.pikachu); // Use static image
+        holder.imageView.setImageResource(R.drawable.pokemon); // Use static image
 
         // If your images are loaded from URLs, use a library like Glide or Picasso
         // Glide.with(context).load(category.getImageUrl()).into(holder.imageView);

@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +43,8 @@ public class HomeFragment extends Fragment {
     private ProductRecyclerViewAdapter productAdapter;
     private SearchView searchView;
     private ImageView searchIcon;
+    private Spinner spinnerSortBy;
+    private Switch switchSortOrder;
 
     @Nullable
     @Override
@@ -52,15 +57,23 @@ public class HomeFragment extends Fragment {
         productRecyclerView = view.findViewById(R.id.featured_list);
         searchView = view.findViewById(R.id.search_view);
         searchIcon = view.findViewById(R.id.ic_search);
+        spinnerSortBy = view.findViewById(R.id.spinner_sort_by);
+        switchSortOrder = view.findViewById(R.id.switch_sort_order);
 
         // Thiết lập LinearLayoutManager theo chiều ngang cho RecyclerView hiển thị danh mục
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         // Thiết lập GridLayoutManager với 2 cột cho RecyclerView hiển thị sản phẩm
         productRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
+        // Thiết lập adapter cho Spinner
+        String[] sortOptions = {"Price", "Quantity"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, sortOptions);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSortBy.setAdapter(spinnerAdapter);
+
         // Gọi phương thức để tải danh mục và sản phẩm
         loadCategories();
-        loadAllProducts(); // Ban đầu tải tất cả sản phẩm
+        loadAllProducts(null, null); // Ban đầu tải tất cả sản phẩm
 
         // Đặt sự kiện click cho biểu tượng tìm kiếm
         searchIcon.setOnClickListener(v -> {
@@ -71,6 +84,31 @@ public class HomeFragment extends Fragment {
                 // Hiển thị thông báo nếu từ khóa tìm kiếm trống
                 Toast.makeText(getContext(), "Vui lòng nhập từ khóa để tìm kiếm", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Đặt sự kiện thay đổi cho Spinner và Switch để sắp xếp sản phẩm
+        spinnerSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Lấy tiêu chí sắp xếp từ Spinner
+                String sortBy = spinnerSortBy.getSelectedItem().toString();
+                // Lấy hướng sắp xếp từ Switch
+                String sortOrder = switchSortOrder.isChecked() ? "asc" : "desc";
+                // Tải lại sản phẩm dựa trên tiêu chí và hướng sắp xếp
+                loadAllProducts(sortBy, sortOrder);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        switchSortOrder.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Lấy tiêu chí sắp xếp từ Spinner
+            String sortBy = spinnerSortBy.getSelectedItem().toString();
+            // Lấy hướng sắp xếp từ Switch
+            String sortOrder = isChecked ? "asc" : "desc";
+            // Tải lại sản phẩm dựa trên tiêu chí và hướng sắp xếp
+            loadAllProducts(sortBy, sortOrder);
         });
 
         return view; // Trả về view đã được inflate
@@ -93,7 +131,11 @@ public class HomeFragment extends Fragment {
                     categoryRecyclerView.setAdapter(categoryAdapter);
 
                     // Đặt sự kiện click cho danh mục để tải sản phẩm theo danh mục
-                    categoryAdapter.setOnCategoryClickListener(category -> loadProductsByCategory(category.getCategoryId()));
+                    categoryAdapter.setOnCategoryClickListener(category -> {
+                        String sortBy = spinnerSortBy.getSelectedItem().toString();
+                        String sortOrder = switchSortOrder.isChecked() ? "asc" : "desc";
+                        loadProductsByCategory(category.getCategoryId(), sortBy, sortOrder);
+                    });
                 } else {
                     // Hiển thị thông báo nếu không thể tải danh mục
                     Toast.makeText(getContext(), "Không thể tải danh mục", Toast.LENGTH_SHORT).show();
@@ -108,11 +150,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void loadAllProducts() {
+    private void loadAllProducts(String sortBy, String sortOrder) {
         // Tạo instance của ProductService để gọi API
         ProductService productService = APIClient.getClient().create(ProductService.class);
-        // Gọi API để lấy danh sách tất cả sản phẩm
-        retrofit2.Call<List<Product>> call = productService.getAllProducts();
+        // Gọi API để lấy danh sách tất cả sản phẩm với phân loại
+        retrofit2.Call<List<Product>> call = productService.getProductsByCategory(0, sortBy, sortOrder);
 
         // Thực hiện cuộc gọi API bất đồng bộ
         call.enqueue(new Callback<List<Product>>() {
@@ -138,10 +180,10 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void loadProductsByCategory(int categoryId) {
+    private void loadProductsByCategory(int categoryId, String sortBy, String sortOrder) {
         // Tạo instance của ProductService để gọi API lấy sản phẩm theo danh mục
         ProductService productService = APIClient.getClient().create(ProductService.class);
-        retrofit2.Call<List<Product>> call = productService.getProductsByCategory(categoryId);
+        retrofit2.Call<List<Product>> call = productService.getProductsByCategory(categoryId, sortBy, sortOrder);
 
         // Thực hiện cuộc gọi API bất đồng bộ
         call.enqueue(new Callback<List<Product>>() {
@@ -152,7 +194,7 @@ public class HomeFragment extends Fragment {
                     List<Product> products = response.body();
                     // Kiểm tra nếu không có sản phẩm trong danh mục, tải tất cả sản phẩm
                     if (products.isEmpty()) {
-                        loadAllProducts(); // Gọi phương thức để tải tất cả sản phẩm
+                        loadAllProducts(null, null); // Gọi phương thức để tải tất cả sản phẩm
                     } else {
                         // Tạo adapter cho sản phẩm theo danh mục và gán cho RecyclerView
                         productAdapter = new ProductRecyclerViewAdapter(products, getContext());
@@ -160,7 +202,7 @@ public class HomeFragment extends Fragment {
                     }
                 } else {
                     // Nếu không thể tải sản phẩm theo danh mục, tải tất cả sản phẩm
-                    loadAllProducts();
+                    loadAllProducts(null, null);
                 }
             }
 
@@ -200,5 +242,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 }

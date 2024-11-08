@@ -17,4 +17,14 @@
         <item>Terrain</item>
         <item>Hybrid</item>
     </string-array>
+
+    <string name="pokemon_shop">Pokemon shop</string>
+    <string name="category_title">Danh mục</string>
+    <string name="featured_title">Các loại pokemon:</string>
+    <string name="toggle_sort_order">Tăng dần</string>
+    <string-array name="sort_options">
+        <item>Price</item>
+        <item>Quantity</item>
+    </string-array>
+
 </resources>

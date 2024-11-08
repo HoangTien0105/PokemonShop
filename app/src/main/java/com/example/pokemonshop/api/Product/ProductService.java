@@ -30,7 +30,9 @@ public interface ProductService {
     Call<Void> setStatus(@Path("id") int id);
 
     @GET("Products")
-    Call<List<Product>> getProductsByCategory(@Query("CategoryId") int categoryId);
+    Call<List<Product>> getProductsByCategory(@Query("CategoryId") int categoryId,
+                                              @Query("sortBy") String sortBy,
+                                              @Query("sortOrder") String sortOrder);
 
     @GET("product/search/{searchInput}")
     Call<List<Product>> searchProducts(@Path("searchInput") String query);
